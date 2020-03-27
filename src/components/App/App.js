@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
-import Header from '../Header/Header'
+import MainPage from '../MainPage/MainPage'
 import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
@@ -33,7 +33,8 @@ class App extends Component {
 
     return (
       <Fragment>
-        <Header user={user} />
+        <MainPage user={user} />
+
         {alerts.map((alert, index) => (
           <AutoDismissAlert
             key={index}
@@ -42,6 +43,7 @@ class App extends Component {
             message={alert.message}
           />
         ))}
+
         <main className="container">
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
