@@ -16,13 +16,7 @@ const ChooseRecipeButton = props => {
         'Authorization': `Token token=${props.user.token}`
       },
       data: {
-        mealType: props.chosenRecipe.mealType,
-        recipeTitle: props.chosenRecipe.recipeTitle,
-        recipeImage: props.chosenRecipe.recipeImage,
-        recipeSummary: props.chosenRecipe.recipeSummary,
-        recipeAuthor: props.chosenRecipe.recipeAuthor,
-        recipeIngredients: props.chosenRecipe.recipeIngredients,
-        recipeSteps: props.chosenRecipe.recipeSteps
+        ...props.chosenRecipe
       }
     })
       .then(response => {
