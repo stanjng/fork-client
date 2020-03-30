@@ -72,7 +72,7 @@ const ChooseMeal = props => {
   return (
     <Fragment>
       <Grid item container xs={12}>
-        <Button variant="contained" justify="center" color="primary" onClick={get}>
+        <Button variant="contained" justify="center" color="primary" onClick={get} disabled={!props.user}>
           {props.meal}
         </Button>
       </Grid>
