@@ -8,6 +8,9 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import {
+  Grid
+} from '@material-ui/core'
 import 'typeface-roboto'
 
 class App extends Component {
@@ -30,10 +33,19 @@ class App extends Component {
 
   render () {
     const { alerts, user } = this.state
+    const unAuthOptions = <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="stretch"
+    >
+      <SignUp alert={this.alert} setUser={this.setUser} />
+      <SignIn alert={this.alert} setUser={this.setUser} />
+    </Grid>
 
     return (
       <Fragment>
-        <MainPage user={user} />
+        <MainPage user={user} alert={this.alert} auth={unAuthOptions}/>
 
         {alerts.map((alert, index) => (
           <AutoDismissAlert

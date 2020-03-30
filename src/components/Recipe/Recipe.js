@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import ChooseRecipeButton from '../Shared/ChooseRecipeButton.js'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,6 +48,16 @@ const Recipe = props => {
     setExpanded(!expanded)
   }
 
+  const chosenRecipe = {
+    mealType: props.recipeType,
+    recipeTitle: props.recipeTitle,
+    recipeImage: props.image,
+    recipeSummary: props.recipeSummary,
+    recipeAuthor: props.recipeAuthor ? props.recipeAuthor : 'n/a',
+    recipeSteps: [ ...props.recipeSteps ],
+    recipeIngredients: [ ...props.recipeIngredients ]
+  }
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -70,7 +81,14 @@ const Recipe = props => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.recipeSummary}
+          {props.summary}
+          <ChooseRecipeButton
+            chosenRecipe={chosenRecipe}
+            recipeType={props.recipeType}
+            mealId={props.mealId}
+            user={props.user}
+            alert={props.alert}
+          />
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

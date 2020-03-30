@@ -5,13 +5,15 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import MealPlan from '../MealPlan/MealPlan.js'
+import ChooseMeal from '../ChooseMeal/ChooseMeal.js'
+// import apiUrl from '../../apiConfig'
 import {
   Grid
 } from '@material-ui/core'
+// import axios from 'axios'
 
 function TabPanel (props) {
-  const { children, value, index, ...other } = props
+  const { children, value, index, user, ...other } = props
 
   return (
     <Typography
@@ -22,7 +24,7 @@ function TabPanel (props) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box container="true" p={2}>{children}</Box>}
     </Typography>
   )
 }
@@ -54,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function VerticalTabs () {
+const MainPage = props => {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
 
@@ -69,7 +71,7 @@ export default function VerticalTabs () {
         variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
+        aria-label="NavBar"
         className={classes.tabs}
       >
         <Tab label="My Profile" {...a11yProps(0)} />
@@ -79,6 +81,7 @@ export default function VerticalTabs () {
       </Tabs>
       <TabPanel value={value} index={0}>
         My Profile
+        {props.auth}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid
@@ -87,7 +90,7 @@ export default function VerticalTabs () {
           justify="center"
           alignItems="stretch"
         >
-          <MealPlan mealtype="breakfast" meal="Breakfast" />
+          <ChooseMeal mealtype="breakfast" meal="Breakfast" user={props.user} alert={props.alert} />
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={2}>
@@ -97,7 +100,7 @@ export default function VerticalTabs () {
           justify="center"
           alignItems="stretch"
         >
-          <MealPlan mealtype="lunch" meal="Lunch" />
+          <ChooseMeal mealtype="lunch" meal="Lunch" user={props.user} alert={props.alert} />
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={3}>
@@ -107,9 +110,11 @@ export default function VerticalTabs () {
           justify="center"
           alignItems="stretch"
         >
-          <MealPlan mealtype="dinner" meal="Dinner" />
+          <ChooseMeal mealtype="dinner" meal="Dinner" user={props.user} alert={props.alert} />
         </Grid>
       </TabPanel>
     </div>
   )
 }
+
+export default MainPage
