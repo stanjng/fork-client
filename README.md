@@ -11,8 +11,12 @@ For version 2: I plan to implement the following:
 ## Technologies
   - React.js
   - Material UI
+  - Express
+  - MongoDB
+  - Git
   - Heroku
   - Postman
+  - [spoonacular API](https://spoonacular.com/food-api)
 
 ## Setup
   1. Fork & Clone or download this repository.
