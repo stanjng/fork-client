@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState } from 'react'
 import { Route } from 'react-router-dom'
-
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import MainPage from '../MainPage/MainPage'
@@ -8,71 +7,56 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
-import {
-  Grid
-} from '@material-ui/core'
+import ChooseMeal from '../ChooseMeal/ChooseMeal.js'
 import 'typeface-roboto'
 
-class App extends Component {
-  constructor () {
-    super()
+const App = props => {
+  const [alerts, setAlerts] = useState([])
+  const [user, setUser] = useState(null)
 
-    this.state = {
-      user: null,
-      alerts: []
-    }
+  const alert = ({ heading, message, variant }) => {
+    setAlerts([...alerts, { heading, message, variant }])
   }
 
-  setUser = user => this.setState({ user })
-
-  clearUser = () => this.setState({ user: null })
-
-  alert = ({ heading, message, variant }) => {
-    this.setState({ alerts: [...this.state.alerts, { heading, message, variant }] })
-  }
-
-  render () {
-    const { alerts, user } = this.state
-    const unAuthOptions = <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="stretch"
+  return (
+    <MainPage
+      user={user}
     >
-      <SignUp alert={this.alert} setUser={this.setUser} />
-      <SignIn alert={this.alert} setUser={this.setUser} />
-    </Grid>
-
-    return (
-      <Fragment>
-        <MainPage user={user} alert={this.alert} auth={unAuthOptions}/>
-
-        {alerts.map((alert, index) => (
-          <AutoDismissAlert
-            key={index}
-            heading={alert.heading}
-            variant={alert.variant}
-            message={alert.message}
-          />
-        ))}
-
-        <main className="container">
-          <Route path='/sign-up' render={() => (
-            <SignUp alert={this.alert} setUser={this.setUser} />
-          )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn alert={this.alert} setUser={this.setUser} />
-          )} />
-          <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword alert={this.alert} user={user} />
-          )} />
-        </main>
-      </Fragment>
-    )
-  }
+      {/* ROUTES */}
+      {alerts.map((alert, index) => (
+        <AutoDismissAlert
+          key={index}
+          heading={alert.heading}
+          variant={alert.variant}
+          message={alert.message}
+        />
+      ))}
+      <Route exact path='/' render={() => (
+        'Hi'
+      )} />
+      <Route path='/sign-up' render={() => (
+        <SignUp alert={alert} setUser={setUser} />
+      )} />
+      <Route path='/sign-in' render={() => (
+        <SignIn alert={alert} setUser={setUser} />
+      )} />
+      <AuthenticatedRoute user={user} path='/sign-out' render={() => (
+        <SignOut alert={alert} clearUser={setUser} user={user} />
+      )} />
+      <AuthenticatedRoute user={user} path='/change-password' render={() => (
+        <ChangePassword alert={alert} user={user} />
+      )} />
+      <AuthenticatedRoute user={user} exact path='/breakfast' render={() => (
+        <ChooseMeal mealtype="breakfast" meal="Breakfast" user={user} alert={alert} />
+      )} />
+      <AuthenticatedRoute user={user} exact path='/lunch' render={() => (
+        <ChooseMeal mealtype="lunch" meal="Lunch" user={user} alert={alert} />
+      )} />
+      <AuthenticatedRoute user={user} exact path='/dinner' render={() => (
+        <ChooseMeal mealtype="dinner" meal="Dinner" user={user} alert={alert} />
+      )} />
+    </MainPage>
+  )
 }
 
 export default App

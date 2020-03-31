@@ -1,21 +1,20 @@
 import React, { useState, Fragment } from 'react'
-import {
-  Button,
-  Grid
-} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
 import spoonacularApiUrl from '../../spoonacularApi'
 import apiUrl from '../../apiConfig'
 import apiKey from '../../apiKey.js'
 import Recipe from '../Recipe/Recipe.js'
 import ReactHtmlParser from 'react-html-parser'
+import Divider from '@material-ui/core/Divider'
 
 const ChooseMeal = props => {
   const [recipes, setRecipes] = useState([])
   const [mealId, setMealId] = useState(null)
 
   const get = () => {
-    axios(`${spoonacularApiUrl}?number=4&tags=${props.mealtype}${apiKey}`)
+    axios(`${spoonacularApiUrl}?number=3&tags=${props.mealtype}${apiKey}`)
       .then((res) => {
         console.log(res.data.recipes)
         setRecipes(res.data.recipes)
@@ -41,7 +40,12 @@ const ChooseMeal = props => {
   }
 
   const recipesJsx = recipes.map(recipe => (
-    <Grid item xs={6} key={recipe.id}>
+    <Grid
+      justify="center"
+      item xs={4}
+      spacing={2}
+      key={recipe.id}
+    >
       <Recipe
         alert={props.alert}
         user={props.user}
@@ -53,6 +57,7 @@ const ChooseMeal = props => {
         image={recipe.image}
         summary={ReactHtmlParser(recipe.summary)}
         recipeIngredients={recipe.extendedIngredients.map(ingredient => {
+          console.log(ingredient)
           return {
             ingredientName: ingredient.name,
             ingredientAmount: ingredient.amount,
@@ -71,12 +76,13 @@ const ChooseMeal = props => {
 
   return (
     <Fragment>
-      <Grid item container xs={12}>
-        <Button variant="contained" justify="center" color="primary" onClick={get} disabled={!props.user}>
-          {props.meal}
-        </Button>
+      <Button variant="contained" justify="center" color="primary" onClick={get} disabled={!props.user}>
+        {props.meal}
+      </Button>
+      <Divider />
+      <Grid container item xs={12}>
+        {recipesJsx}
       </Grid>
-      {recipesJsx}
     </Fragment>
   )
 }

@@ -112,10 +112,26 @@ const Recipe = props => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <h2>Ingredients:</h2>
-          <ul>{props.recipeIngredients}</ul>
+          <ul>
+            {console.log(props.recipeIngredients)}
+            { props.recipeIngredients.map(ingredient => {
+              return (
+                <li key={ingredient.ingredientName}>
+                  {ingredient.ingredientName} ({ingredient.ingredientAmount} {ingredient.ingredientUnit})
+                </li>
+              )
+            }) }
+          </ul>
           <h3>Instructions:</h3>
           <ol>
-            {props.recipeInstructions}
+            {console.log(props.recipeSteps)}
+            { props.recipeSteps.map(step => {
+              return (
+                <li key={step.stepText}>
+                  {step.stepText}
+                </li>
+              )
+            }) }
           </ol>
         </CardContent>
       </Collapse>
