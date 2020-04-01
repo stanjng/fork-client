@@ -1,6 +1,6 @@
 let apiUrl
 const apiUrls = {
-  production: 'http://localhost:4741',
+  production: 'https://obscure-inlet-03438.herokuapp.com/',
   development: 'http://localhost:4741'
 }
 
