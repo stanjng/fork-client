@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import ToolTip from '@material-ui/core/ToolTip'
 import IconButton from '@material-ui/core/IconButton'
 import Container from '@material-ui/core/Container'
@@ -24,35 +23,55 @@ import GroupAddRoundedIcon from '@material-ui/icons/GroupAddRounded'
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded'
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 import MeetingRoomRoundedIcon from '@material-ui/icons/MeetingRoomRounded'
-import LocalDiningIcon from '@material-ui/icons/LocalDining'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
-function Copyright () {
-  return (
-    <Typography variant="body2" color="textPrimary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://stanjng.github.io/">
-        {'See What Stan\'s Up To!'}
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+const customTheme = createMuiTheme(
+  {
+    palette: {
+      common: {
+        black: 'rgba(0, 0, 0, 1)',
+        white: '#fff'
+      },
+      background: {
+        paper: 'rgba(237, 173, 18 , 1)',
+        default: 'rgba(15, 15, 15, 1)'
+      },
+      primary: {
+        light: 'rgba(246, 214, 135, 1)',
+        main: 'rgba(240, 187, 64, 1)',
+        dark: 'rgba(211, 155, 17, 1)',
+        contrastText: 'rgba(78, 78, 78, 1)'
+      },
+      secondary: {
+        light: 'rgba(246, 135, 167, 1)',
+        main: 'rgba(240, 64, 115, 1)',
+        dark: 'rgba(211, 17, 73, 1)',
+        contrastText: 'rgba(255, 255, 255, 1)'
+      },
+      error: {
+        light: 'rgba(246, 158, 135, 1)',
+        main: 'rgba(240, 101, 64, 1)',
+        dark: 'rgba(211, 57, 17, 1)',
+        contrastText: 'rgba(255, 255, 255, 1)'
+      },
+      text: {
+        primary: 'rgba(251,238,206, 1)',
+        secondary: 'rgba(255, 255, 255, 1)',
+        disabled: 'rgba(20, 20, 20, 0.8)',
+        hint: 'rgba(0, 0, 0, 0.38)'
+      }
+    }
+  }
+)
 
 const drawerWidth = 240
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    backgroundImage: 'url(https://source.unsplash.com/featured/?food)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-     theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    background: customTheme.palette.primary.main,
+    display: 'flex'
   },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
@@ -86,9 +105,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'none'
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontFamily: '"Source Serif Pro, serif"',
+    fontWeight: 500,
+    fontSize: theme.typography.pxToRem(30)
   },
   drawerPaper: {
+    color: customTheme.palette.primary.contrastText,
+    background: customTheme.palette.primary.light,
+    borderColor: customTheme.palette.primary.light,
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -119,6 +144,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4)
   },
   paper: {
+    background: customTheme.palette.background.default,
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
@@ -126,9 +152,22 @@ const useStyles = makeStyles((theme) => ({
     opacity: '0.95'
   },
   fixedHeight: {
-    height: '75vh'
+    height: '78vh'
   }
 }))
+
+function Copyright () {
+  return (
+    <Typography variant="body2" color="black" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://stanjng.github.io/">
+        {'See What Stan\'s Up To!'}
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  )
+}
 
 const MainPage = props => {
   const classes = useStyles()
@@ -146,13 +185,13 @@ const MainPage = props => {
     <List>
       <ListItem button component="a" href="#/sign-in">
         <ListItemIcon>
-          <PersonRoundedIcon fontSize="large" />
+          <PersonRoundedIcon color="default" fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Sign In" />
       </ListItem>
       <ListItem button component="a" href="#/sign-up">
         <ListItemIcon>
-          <GroupAddRoundedIcon fontSize="large" />
+          <GroupAddRoundedIcon color="default" fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Sign Up" />
       </ListItem>
@@ -163,13 +202,13 @@ const MainPage = props => {
     <List>
       <ListItem button component="a" href="#/change-password">
         <ListItemIcon>
-          <VpnKeyRoundedIcon fontSize="large" />
+          <VpnKeyRoundedIcon color="default" fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Change Password" />
       </ListItem>
       <ListItem button component="a" href="#/sign-out">
         <ListItemIcon>
-          <MeetingRoomRoundedIcon fontSize="large" />
+          <MeetingRoomRoundedIcon color="default" fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Sign Out" />
       </ListItem>
@@ -177,94 +216,94 @@ const MainPage = props => {
   )
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
+    <ThemeProvider theme={customTheme}>
+      <div className={classes.root}>
+        <CssBaseline />
 
-      { /* NavBar */ }
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Fork <LocalDiningIcon color="secondary" fontSize="large" />
-          </Typography>
-        </Toolbar>
-      </AppBar>
+        { /* NavBar */ }
+        <AppBar position="absolute" elevation={0} border="0 0 1px 0" className={clsx(classes.appBar, open && classes.appBarShift)}>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="secondary"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography component="h1" variant="h6" color="secondary" align="right" noWrap className={classes.title}>
+              Fork
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-      { /* Drawer */ }
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ToolTip disableHoverListener={!!props.user} placement="right" title="You must be signed in to access this feature.">
-            <span>
-              <ListItem button disabled={!props.user} component="a" href="#/breakfast">
-                <ListItemIcon>
-                  <Brightness7Rounded fontSize="large" />
-                </ListItemIcon>
-                <ListItemText primary="Breakfast" />
-              </ListItem>
-            </span>
-          </ToolTip>
-          <ToolTip disableHoverListener={!!props.user} placement="right" title="You must be signed in to access this feature.">
-            <span>
-              <ListItem button disabled={!props.user} component="a" href="#/lunch">
-                <ListItemIcon>
-                  <Brightness6Rounded fontSize="large" />
-                </ListItemIcon>
-                <ListItemText primary="Lunch" />
-              </ListItem>
-            </span>
-          </ToolTip>
-          <ToolTip disableHoverListener={!!props.user} placement="right" title="You must be signed in to access this feature.">
-            <span>
-              <ListItem button disabled={!props.user} component="a" href="#/dinner">
-                <ListItemIcon>
-                  <Brightness4Rounded fontSize="large" />
-                </ListItemIcon>
-                <ListItemText primary="Dinner" />
-              </ListItem>
-            </span>
-          </ToolTip>
-        </List>
-        { console.log(props.user) }
-        { props.user ? authOptions : unAuthOptions }
-      </Drawer>
+        { /* Drawer */ }
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton color="secondary" onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <List>
+            <ToolTip disableHoverListener={!!props.user} placement="right" title="You must be signed in to access this feature.">
+              <span>
+                <ListItem button disabled={!props.user} component="a" href="#/breakfast">
+                  <ListItemIcon>
+                    <Brightness7Rounded color="secondary" fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText primary="Breakfast" />
+                </ListItem>
+              </span>
+            </ToolTip>
+            <ToolTip disableHoverListener={!!props.user} placement="right" title="You must be signed in to access this feature.">
+              <span>
+                <ListItem button disabled={!props.user} component="a" href="#/lunch">
+                  <ListItemIcon>
+                    <Brightness6Rounded color="secondary" fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText primary="Lunch" />
+                </ListItem>
+              </span>
+            </ToolTip>
+            <ToolTip disableHoverListener={!!props.user} placement="right" title="You must be signed in to access this feature.">
+              <span>
+                <ListItem button disabled={!props.user} component="a" href="#/dinner">
+                  <ListItemIcon>
+                    <Brightness4Rounded color="secondary" fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText primary="Dinner" />
+                </ListItem>
+              </span>
+            </ToolTip>
+          </List>
+          { props.user ? authOptions : unAuthOptions }
+        </Drawer>
 
-      { /* Main Content */ }
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                {props.children}
-              </Paper>
+        { /* Main Content */ }
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Paper className={fixedHeightPaper}>
+                  {props.children}
+                </Paper>
+              </Grid>
             </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
+            <Box mt={3}>
+              <Copyright />
+            </Box>
+          </Container>
+        </main>
+      </div>
+    </ThemeProvider>
   )
 }
 
