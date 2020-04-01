@@ -1,6 +1,6 @@
 {
   "name": "fork-client",
-  "homepage": "https://<USERNAME>.github.io/<REPO NAME>",
+  "homepage": "https://stanjng.github.io/fork-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
