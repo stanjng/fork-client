@@ -16,10 +16,12 @@ const SignUp = props => {
     }
   )
 
-  const handleChange = event => setRegInfo({
-    ...regInfo,
-    [event.target.name]: event.target.value
-  })
+  const handleChange = event => setRegInfo(
+    {
+      ...regInfo,
+      [event.target.name]: event.target.value
+    }
+  )
 
   const onSignUp = event => {
     event.preventDefault()
@@ -35,7 +37,7 @@ const SignUp = props => {
       .catch(error => {
         console.error(error)
         setRegInfo({ email: '', password: '', passwordConfirmation: '' })
-        alert({
+        props.alert({
           heading: 'Sign Up Failed',
           message: messages.signUpFailure,
           variant: 'danger'
