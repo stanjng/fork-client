@@ -48,7 +48,7 @@ const SignIn = props => {
   return (
     <div className="row">
       <div className="col-sm-10 col-md-8 mx-auto mt-5">
-        <h3>Sign In</h3>
+        <h3 fontFamily="Source Sans Pro, Roboto">Sign In</h3>
         <form onSubmit={onSignIn} noValidate>
           <TextField
             variant="outlined"

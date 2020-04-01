@@ -8,6 +8,8 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import ChooseMeal from '../ChooseMeal/ChooseMeal.js'
+import Grid from '@material-ui/core/Grid'
+import SplashPage from '../SplashPage/SplashPage'
 import 'typeface-roboto'
 
 const App = props => {
@@ -32,7 +34,14 @@ const App = props => {
         />
       ))}
       <Route exact path='/' render={() => (
-        'Hi'
+        <Grid
+          container
+          item
+          xs={12}
+          color="primary"
+        >
+          <SplashPage setUser={setUser} />
+        </Grid>
       )} />
       <Route path='/sign-up' render={() => (
         <SignUp alert={alert} setUser={setUser} />
