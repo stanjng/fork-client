@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -36,24 +37,24 @@ const customTheme = createMuiTheme(
       },
       background: {
         paper: 'rgba(237, 173, 18 , 1)',
-        default: 'rgba(15, 15, 15, 1)'
+        default: 'rgba(224, 225, 218, .96)'
       },
       primary: {
-        light: 'rgba(246, 214, 135, 1)',
-        main: 'rgba(240, 187, 64, 1)',
-        dark: 'rgba(211, 155, 17, 1)',
+        light: '#ffedb3',
+        main: '#ffd54d',
+        dark: '#e6b100',
         contrastText: 'rgba(78, 78, 78, 1)'
       },
       secondary: {
-        light: 'rgba(246, 135, 167, 1)',
-        main: 'rgba(240, 64, 115, 1)',
-        dark: 'rgba(211, 17, 73, 1)',
+        light: 'lighten( rgba(220, 66, 80, 1), 20% )',
+        main: 'rgba(220, 66, 80, 1)',
+        dark: 'darken(rgba(220, 66, 80, 1), 20%)',
         contrastText: 'rgba(255, 255, 255, 1)'
       },
-      error: {
-        light: 'rgba(246, 158, 135, 1)',
-        main: 'rgba(240, 101, 64, 1)',
-        dark: 'rgba(211, 57, 17, 1)',
+      accent: {
+        light: 'lighten( rgba(19, 81, 169, 1), 20% )',
+        main: 'rgba(19, 81, 169, 1)',
+        dark: 'darken( rgba(19, 81, 169, 1), 20% )',
         contrastText: 'rgba(255, 255, 255, 1)'
       },
       text: {
@@ -66,11 +67,13 @@ const customTheme = createMuiTheme(
   }
 )
 
-const drawerWidth = 240
+const drawerWidth = 200
 
 const useStyles = makeStyles(theme => ({
   root: {
-    background: customTheme.palette.primary.main,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     display: 'flex'
   },
   toolbar: {
@@ -84,6 +87,8 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   appBar: {
+    borderBottom: `2px solid ${customTheme.palette.primary.light}`,
+    background: 'transparent',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -104,16 +109,20 @@ const useStyles = makeStyles(theme => ({
   menuButtonHidden: {
     display: 'none'
   },
+  hide: {
+    display: 'none'
+  },
   title: {
     flexGrow: 1,
-    fontFamily: '"Source Serif Pro, serif"',
+    fontFamily: '"Baskerville, serif"',
     fontWeight: 500,
-    fontSize: theme.typography.pxToRem(30)
+    fontSize: theme.typography.pxToRem(30),
+    color: customTheme.palette.primary.main
   },
   drawerPaper: {
-    color: customTheme.palette.primary.contrastText,
-    background: customTheme.palette.primary.light,
-    borderColor: customTheme.palette.primary.light,
+    color: customTheme.palette.secondary.contrastText,
+    background: customTheme.palette.secondary.main,
+    borderColor: customTheme.palette.secondary.main,
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -124,14 +133,11 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaperClose: {
     overflowX: 'hidden',
+    display: 'none',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9)
-    }
+    })
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -148,11 +154,41 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
-    flexDirection: 'column',
-    opacity: '0.95'
+    flexDirection: 'row',
+    borderRadius: '25%',
+    alignItems: 'center'
   },
-  fixedHeight: {
-    height: '78vh'
+  paperHeight: {
+    display: 'flex',
+    alignItems: 'baseline',
+    minHeight: '78vh',
+    maxHeight: '78vh',
+    paddingTop: '7rem',
+    // background: 'transparent'
+    background: 'transparent'
+  },
+  circleCards: {
+    maxHeight: '50vh',
+    maxWidth: '50vh',
+    minHeight: '50vh',
+    minWidth: '50vh'
+  },
+  forkIcon: {
+    padding: '.3rem',
+    width: '4rem'
+  },
+  icons: {
+    color: customTheme.palette.primary.light
+  },
+  splashText: {
+    fontFamily: '"Baskerville, serif"',
+    fontSize: '7rem',
+    lineHeight: '1',
+    letterSpacing: '-0.5rem'
+  },
+  enter: {
+    fontSize: '2rem',
+    padding: '1rem'
   }
 }))
 
@@ -179,61 +215,107 @@ const MainPage = props => {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaper = clsx(classes.paper, classes.circleCards)
 
   const unAuthOptions = (
     <List>
       <ListItem button component="a" href="#/sign-in">
         <ListItemIcon>
-          <PersonRoundedIcon color="default" fontSize="large" />
+          <PersonRoundedIcon className={classes.icons} fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Sign In" />
       </ListItem>
       <ListItem button component="a" href="#/sign-up">
         <ListItemIcon>
-          <GroupAddRoundedIcon color="default" fontSize="large" />
+          <GroupAddRoundedIcon className={classes.icons} fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Sign Up" />
       </ListItem>
     </List>
   )
 
+  const unAuthPage = (
+    <Grid container className={classes.paperHeight} spacing={2}>
+      <Grid item md={10}>
+        <Typography className={classes.splashText}>
+          hate meal prep? same.
+        </Typography>
+        <Typography className={classes.splashText}>
+          just <span style={{
+            color: customTheme.palette.primary.main
+          }}>Fork</span> it!
+        </Typography>
+      </Grid>
+      <Button
+        variant="contained"
+        color="primary"
+        href={
+          props.user ? '#/main' : '#/sign-in'
+        }>
+      Go inside!
+      </Button>
+    </Grid>
+  )
+
   const authOptions = (
     <List>
       <ListItem button component="a" href="#/change-password">
         <ListItemIcon>
-          <VpnKeyRoundedIcon color="default" fontSize="large" />
+          <VpnKeyRoundedIcon className={classes.icons} fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Change Password" />
       </ListItem>
       <ListItem button component="a" href="#/sign-out">
         <ListItemIcon>
-          <MeetingRoomRoundedIcon color="default" fontSize="large" />
+          <MeetingRoomRoundedIcon className={classes.icons} fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Sign Out" />
       </ListItem>
     </List>
   )
 
+  const authPage = (
+    <Grid container className={classes.paperHeight} spacing={2}>
+      <Grid item md={4}>
+        <Paper className={fixedHeightPaper}>
+          {props.children}
+        </Paper>
+      </Grid>
+      <Grid item md={4}>
+        <Paper className={fixedHeightPaper}>
+          {props.children}
+        </Paper>
+      </Grid>
+      <Grid item md={4}>
+        <Paper className={fixedHeightPaper}>
+          {props.children}
+        </Paper>
+      </Grid>
+    </Grid>
+  )
+
+  const bgUrl = props.user ? '/splash.png' : '/welcome.png'
+
   return (
     <ThemeProvider theme={customTheme}>
-      <div className={classes.root}>
+      <div className={classes.root} style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL + bgUrl})`
+      }}>
         <CssBaseline />
 
         { /* NavBar */ }
-        <AppBar position="absolute" elevation={0} border="0 0 1px 0" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <AppBar position="absolute" elevation={0} className={clsx(classes.appBar, open && classes.appBarShift)}>
           <Toolbar className={classes.toolbar}>
             <IconButton
               edge="start"
-              color="secondary"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
-              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+              className={clsx(classes.menuButton, classes.icons, open && classes.menuButtonHidden)}
             >
-              <MenuIcon />
+              <MenuIcon fontSize="large" />
             </IconButton>
             <Typography component="h1" variant="h6" color="secondary" align="right" noWrap className={classes.title}>
-              Fork
+              <img className={clsx(classes.forkIcon)} src={process.env.PUBLIC_URL + '/fork-icon.png'}/>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -247,7 +329,7 @@ const MainPage = props => {
           open={open}
         >
           <div className={classes.toolbarIcon}>
-            <IconButton color="secondary" onClick={handleDrawerClose}>
+            <IconButton className={classes.icons} onClick={handleDrawerClose}>
               <ChevronLeftIcon />
             </IconButton>
           </div>
@@ -256,7 +338,7 @@ const MainPage = props => {
               <span>
                 <ListItem button disabled={!props.user} component="a" href="#/breakfast">
                   <ListItemIcon>
-                    <Brightness7Rounded color="secondary" fontSize="large" />
+                    <Brightness7Rounded className={classes.icons} fontSize="large" />
                   </ListItemIcon>
                   <ListItemText primary="Breakfast" />
                 </ListItem>
@@ -266,7 +348,7 @@ const MainPage = props => {
               <span>
                 <ListItem button disabled={!props.user} component="a" href="#/lunch">
                   <ListItemIcon>
-                    <Brightness6Rounded color="secondary" fontSize="large" />
+                    <Brightness6Rounded className={classes.icons} fontSize="large" />
                   </ListItemIcon>
                   <ListItemText primary="Lunch" />
                 </ListItem>
@@ -276,7 +358,7 @@ const MainPage = props => {
               <span>
                 <ListItem button disabled={!props.user} component="a" href="#/dinner">
                   <ListItemIcon>
-                    <Brightness4Rounded color="secondary" fontSize="large" />
+                    <Brightness4Rounded className={classes.icons} fontSize="large" />
                   </ListItemIcon>
                   <ListItemText primary="Dinner" />
                 </ListItem>
@@ -290,13 +372,7 @@ const MainPage = props => {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Paper className={fixedHeightPaper}>
-                  {props.children}
-                </Paper>
-              </Grid>
-            </Grid>
+            { props.user ? authPage : unAuthPage}
             <Box mt={3}>
               <Copyright />
             </Box>

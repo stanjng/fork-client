@@ -43,6 +43,16 @@ const App = props => {
           <SplashPage setUser={setUser} />
         </Grid>
       )} />
+      <Route exact path='/main' render={() => (
+        <Grid
+          container
+          item
+          xs={12}
+          color="primary"
+        >
+          <SplashPage setUser={setUser} />
+        </Grid>
+      )} />
       <Route path='/sign-up' render={() => (
         <SignUp alert={alert} setUser={setUser} />
       )} />
